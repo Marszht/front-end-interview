@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>子域名 a 的页面</title>
+</head>
+<body>
+    <h1>子域名 a 的页面</h1>
+    <iframe src="http://b.example.com"></iframe>
+    <script>
+        document.domain = "example.com";
+        var b = window.frames[0];
+        b.document.write("<h1>已经访问了 a 的页面</h1>");
+    </script>
+</body>
+</html>

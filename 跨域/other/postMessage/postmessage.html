@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>postmessage parent</title>
+  </head>
+  <body>
+    <iframe
+      id="inlineFrameExample"
+      title="Inline Frame Example"
+      width="90%"
+      height="500"
+      src="http://localhost:3000/">
+    </iframe>
+    <script>
+      var mc = new MessageChannel();
+      mc.addEventListener("message", event => {
+        var origin = event.origin;
+        console.log(origin)
+      })
+    </script>
+  </body>
+</html>
