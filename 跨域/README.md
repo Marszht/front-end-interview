@@ -27,7 +27,7 @@ function jsonp(url, jsonpCallback, callback) {
 }
 ```
 
-这个一般需要服务端也做配合处理，因为要识别 请求链接上的 callback, 然后解析出 jsonpCallback，返回并执行  jsonpCallback(data)；然后挂在windows 上就能识别到
+这个一般需要服务端也做配合处理，因为要识别 请求链接上的 callback, 然后解析出 jsonpCallback，返回并执行 jsonpCallback(data)；然后挂在 windows 上就能识别到
 服务端端处理
 
 ```js
@@ -51,20 +51,24 @@ app.listen(port, () => {
 ```
 
 ![proxy servrt](https://blog.logrocket.com/wp-content/uploads/2022/03/proxy-server-diagram.png)
+
 #### Nginx 反向代理 这个还得看
+
 ```bash
 
 
 ```
-#### Proxy http-proxy-middleware 插件方向代理 
-> 本地开发环境 localhost: 3000 请求 gfwx.gfduns.com.cn 接口 ，proxy 代理地址 就是目标想要访问的   
-原理就是：
-> - 客户端向 本地服务器 发送请求 
+
+#### Proxy http-proxy-middleware 插件方向代理
+
+> 本地开发环境 localhost: 3000 请求 gfwx.gfduns.com.cn 接口 ，proxy 代理地址 就是目标想要访问的  
+> 原理就是：
+>
+> - 客户端向 本地服务器 发送请求
 > - 本地服务器 向 proxy 代理的 服务器 gfwx.gfduns.com.cn 发送请求，因为是服务器 跟服务器之间的数据交换，所以是不受同源策略影响的。获取到数据之后 再返回给 本地服务器
-> -  本地服务器 再返回到本地客户端  
+> - 本地服务器 再返回到本地客户端
 
 出于对性能以及安全的考虑，一般在测试环境或者本地开发才会使用 proxy 代理。生产环境使用 更成熟的 nginx 来处理 跨域的问题。
-
 
 #### CORS(跨域资源共享)
 
@@ -81,18 +85,35 @@ app.listen(port, () => {
 
 ```javascript
 // 发送消息
-window.parent.postMessage('message', 'http://tets.com');
-// 接收消息
-var mc = new MessageChannel();
-mc.addEventListener('message', function (event) {
-  var origin = event.origin || event.originEvent.origin;
-  if (origin === 'http://tets.com') {
-    console.log('message received from http://tets.com');
+// 表示 只给 http://localhost:3001 发送消息，其他的域名接受不到。
+window.parent.postMessage(data, 'http://localhost:3001');
+window.addEventListener('message', event => {
+  var origin = event.origin;
+  if 
+  if(origin !== 'http://localhost:3001') {
+    return;
   }
+  // do something
+  console.log(event);
+
+  // verify 
+  event.source.postMessage("i have got you message", origin)
+
 });
 ```
 
 ### 日常开发中会遇到的情况
+
+1. 开发过程中出现的跨域，本地访问接口出现的跨域，解决方法：
+
+- 后端没有设置 CORS，
+- nginx 方向代理
+- 本地启动服务去代理
+- 设置浏览器为跨域浏览器（一般用于 chrome）
+
+2. 图片的跨域
+3. canvas 中出现的跨域 在画图的时候可能会出现 html2canvas
+4. 字体的跨域 
 
 ### 常见 web 应用程序漏洞
 
@@ -112,4 +133,8 @@ mc.addEventListener('message', function (event) {
 
 #### 预防
 
-1.
+1. 转义字符，就是对于用户输入的内容，不要直接传给后端，需要进行转义
+2. CSP：Content-Security-Policy，建立白名单，开发者明确告诉浏览器哪些外部资源可以加载和执行
+
+#### CSRF 跨站请求伪造
+> 构造出一个后端请求地址，诱导用户点击或者通过某些途径自动发起请求。

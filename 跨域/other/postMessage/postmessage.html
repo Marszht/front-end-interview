@@ -15,11 +15,18 @@
       src="http://localhost:3000/">
     </iframe>
     <script>
-      var mc = new MessageChannel();
-      mc.addEventListener("message", event => {
+      // 表示 只给 http://localhost:3000 发送消息，其他的域名接受不到。
+      // window.parent.postMessage(data, 'http://localhost:3000');
+      window.addEventListener('message', event => {
         var origin = event.origin;
-        console.log(origin)
-      })
+        if (origin === 'http://127.0.0.1:3000') {
+          return;
+        }
+        // do something
+        console.log(event.origin === 'http://127.0.0.1:3000');
+        // verify
+        // event.source.postMessage('i have got you message', origin);
+      });
     </script>
   </body>
 </html>
