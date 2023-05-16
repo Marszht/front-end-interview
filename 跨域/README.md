@@ -75,6 +75,30 @@ app.listen(port, () => {
 通过配置请求头中 `Access-Control-Allow-Origin`: "\*" 或者配置其他可以访问的域名。
 `Access-Control-Allow-Methods` 一般还有这个字段。
 
+当浏览器发出跨域请求的时候并且该请求为简单请求才会触发OPTIONS 预检请求，代理后的接口请求不回再发出OPTIONS 请求。
+
+`简单请求`  
+
+请求方法为
+-  GET
+- HEAD 
+- POST
+
+请求头中有以下字段
+- Accept
+- Accept-language
+- Content-Type
+- Range
+
+Content-Type 标头所指定的类型仅限以下三者
+- text/plain
+- multipart/form-data
+- application/x-www-form-urlencoded
+
+相关的资料
+[stackoverflow](https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe/43881141#43881141)
+
+[CORS](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS)
 #### document.domain
 
 > 这种方式只能用于二级域名相同的情况 `a.test.com` , `b.test.com` 只需要给页面添加 `document.domain = test.com`
@@ -117,6 +141,8 @@ window.addEventListener('message', event => {
 
 ### 常见 web 应用程序漏洞
 
+[参考资料](https://github.com/trimstray/the-book-of-secret-knowledge)
+[web程序漏洞](https://juejin.cn/post/7155262627860447240)
 #### Cross-site Scripting - XSS（跨站脚本攻击）
 
 > 攻击者可以利用这种漏洞在网站注入恶意客户端代码。若受害者运行这些代码，则攻击者可以冒充用户
@@ -166,3 +192,4 @@ window.addEventListener('message', event => {
 
 #### 预防
 可以使用https 来预防。
+增加一个安全通道来传输信息
