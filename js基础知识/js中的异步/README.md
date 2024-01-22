@@ -51,9 +51,10 @@
 3. yield*
 
 ## Generate
-> * 函数执行后呢会返回一个遍历器。注意⚠️是需要执行。
+> * 函数执行后呢会返回一个遍历器 （指针）。注意⚠️是需要执行。
 gererator 函数的 trow方法 跟全局的throw 方法不一样。
 如果 Generator 函数 内部没有部署try...catch.... 模块则会被外部模块捕获到，如果部署了 try catch 则遍历器throw 抛出的错误不影响下一次遍历。
+
 
 
 ### next()
@@ -71,6 +72,16 @@ gererator 函数的 trow方法 跟全局的throw 方法不一样。
 next：next(), 将 yield 表达式替换成一个值。
 throw：throw(),将yield表达式替换成throw 语句
 return：return(), 将yield表达式替换成return语句。
+
+### Generator 的异步
+协程： 多个进程相互协作共同完成异步任务
+
+并行：就是可以中断，去执行其他的进程
+并发：多个进程一起执行
+串行：一个进程执行完，才能执行另一个
+
+node 规定 callback 第一个参数必须是err，因为异步第一阶段结束后上下文环境已经不见了，
+如果第一阶段发生错误，需要通过参数传递给下一个阶段。
 
 ## Async
 
