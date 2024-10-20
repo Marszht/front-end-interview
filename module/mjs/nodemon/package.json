@@ -1,0 +1,32 @@
+{
+  "name": "nodemon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx babel-node index.js",
+    "nodemon": "nodemon -x babel-node index.js"
+  },
+  "author": "mar",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.23.9",
+    "@babel/node": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "nodemon": "^3.0.3"
+  },
+  "nodemonConfig": {
+		"env": {
+			"NODE_ENV": "dev"
+		},
+		"execMap": {
+			"js": "node --harmony"
+		},
+		"ext": "js json",
+		"ignore": [
+			"dist/"
+		]
+	}
+}
